@@ -1,0 +1,51 @@
+:root {
+	--very-dark-blue: #2f4858;
+	--dark-blue: #16697a;
+	--medium-blue: #489fb5;
+	--light-blue: #82c0cc;
+	--light-grey: #ede7e3;
+	--orange: #e06c1e;
+	--yellow: #f6ae2d;
+}
+
+.dial {
+	height: 120px;
+	width: 120px;
+}
+
+.timer {
+	position: relative;
+	display: inline-block;
+	margin: 0 30px 0 0;
+}
+
+.timer input {
+	display: block;
+	border: none;
+	width: 80px;
+	font-size: 1.5rem;
+	text-align: center;
+	background-color: transparent;
+	color: var(--light-grey);
+}
+
+.timer input:focus {
+	outline: none;
+}
+circle {
+	fill: transparent;
+	stroke-width: 10;
+	stroke-opacity: 0.7;
+	stroke: var(--medium-blue);
+}
+.controls {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
