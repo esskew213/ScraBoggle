@@ -70,8 +70,9 @@ class InstructionPopup {
 class Timer {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
-		this.maxSeconds = 10;
+		this.maxSeconds = 30;
 		this.circle = document.querySelector('circle');
+		this.secondsLeftHTML = document.querySelector('#duration');
 		this.perimeter = this.circle.getAttribute('r') * 2 * Math.PI;
 		this.circle.setAttribute('stroke-dasharray', this.perimeter);
 	}
@@ -83,14 +84,16 @@ class Timer {
 	};
 
 	tick = () => {
+		this.secondsLeftHTML.value = this.currentSeconds;
+		if (this.currentSeconds === 0) {
+			this.finished();
+		}
+
 		this.currentSeconds -= 1;
 		this.circle.setAttribute(
 			'stroke-dashoffset',
 			this.perimeter * this.currentSeconds / this.maxSeconds - this.perimeter
 		);
-		if (this.currentSeconds === 0) {
-			this.finished();
-		}
 	};
 
 	finished = () => {
@@ -333,7 +336,8 @@ class Scorer {
 		WordSetGetter.fetchAndParse().then((wordSet) => {
 			this.wordSet = wordSet;
 			this.SCORING = { 3: 1, 4: 1, 5: 2, 6: 3, 7: 5, 8: 11 };
-			this.scoredWords = new Set();
+			this.guessedWordsHTML = document.querySelector('#guessed-words');
+			this.totalScoreHTML = document.querySelector('#total-score-number');
 		});
 	}
 
@@ -343,9 +347,17 @@ class Scorer {
 		if (word.length > 2) {
 			if (!this.scoredWords.has(word)) {
 				if (this.wordSet.has(word)) {
+					// Internal logic
 					let score = this.SCORING[`${Math.min(word.length, 8)}`];
+					this.totalScore += score;
 					this.scoredWords.add(word);
-					console.log(score);
+
+					// Display logic
+					this.totalScoreHTML.innerText = this.totalScore;
+					const newWord = document.createElement('p');
+					newWord.classList.add('guessed-words');
+					newWord.innerText = `${word}: ${score}`;
+					this.guessedWordsHTML.append(newWord);
 				} else {
 					console.log('Word not in dictionary.');
 				}
@@ -357,7 +369,11 @@ class Scorer {
 		}
 	};
 
-	reset = () => {};
+	reset = () => {
+		this.scoredWords = new Set();
+		this.totalScore = 0;
+		this.totalScoreHTML.innerText = '0';
+	};
 }
 
 class WordSetGetter {
