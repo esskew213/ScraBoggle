@@ -4,6 +4,8 @@ class BoggleGame {
 		this.timer = new Timer(this);
 		this.boggleBoard = new BoggleBoard(this);
 		this.scorer = new Scorer();
+
+		this.boggleBoard.freeze();
 	}
 
 	start = () => {
@@ -16,6 +18,10 @@ class BoggleGame {
 	end = () => {
 		this.menu.enable();
 		this.boggleBoard.freeze();
+	};
+
+	evaluateWord = (word) => {
+		this.scorer.evaluateWord(word);
 	};
 }
 
@@ -167,48 +173,57 @@ class BoggleBoard {
 			tile.idx + this.DIAMETER,
 			tile.idx + this.DIAMETER + 1
 		];
-		let validIndices = neighbourIndices.filter((idx) => idx >= 0 && idx < this.tiles.length);
+
+		const correctRowOffsets = [ -1, -1, -1, 0, 0, 1, 1, 1 ];
+		const currentRow = Math.floor(tile.idx / this.DIAMETER);
+		const rowOffsets = neighbourIndices.map((idx) => Math.floor(idx / this.DIAMETER) - currentRow);
+		let validIndices = [];
+		for (let i = 0; i < rowOffsets.length; i++) {
+			if (rowOffsets[i] === correctRowOffsets[i]) {
+				let idx = neighbourIndices[i];
+				if (idx >= 0 && idx < this.tiles.length) {
+					validIndices.push(idx);
+				}
+			}
+		}
 		return new Set(validIndices.map((idx) => this.tiles[idx]));
 	};
 
 	setBoardStateFromTile = (currentTile) => {
 		let neighbours = this.getNeighbours(currentTile);
-		console.log(neighbours);
+		let tilesBefore = new Set(this.currentTilesHolder.currentTiles.slice(0, -2));
 		for (let tile of this.tiles) {
-			if (!neighbours.has(tile) && !tile === currentTile) {
-				console.log(`disable tile ${tile.getLetter()}`);
-				tile.disable();
-			} else {
-				console.log(`enable tile ${tile.getLetter()}`);
+			if ((neighbours.has(tile) || tile === currentTile) && !tilesBefore.has(tile)) {
 				tile.enable();
+			} else {
+				tile.disable();
 			}
 		}
 		currentTile.highlight();
 	};
 
 	startWord = (tile) => {
-		this.setBoardStateFromTile(tile);
 		this.currentTilesHolder.addTile(tile);
-		console.log(tile.getLetter());
+		this.setBoardStateFromTile(tile);
 	};
 
 	addLetterToWord = (tile) => {
 		if (this.currentTilesHolder.hasWordStarted()) {
 			let is_undo = this.currentTilesHolder.numTiles() > 1 && this.currentTilesHolder.getTileBefore() === tile;
 			if (is_undo) {
-				this.setBoardStateFromTile(tile);
 				let prevTile = this.currentTilesHolder.popTile();
-				prevTile.reset();
-			} else {
 				this.setBoardStateFromTile(tile);
+				prevTile.reset();
+			} else if (tile != this.currentTilesHolder.peek()) {
 				this.currentTilesHolder.addTile(tile);
+				this.setBoardStateFromTile(tile);
 			}
 		}
 	};
 
 	endWord = () => {
 		if (this.currentTilesHolder.hasWordStarted()) {
-			this.boggleGame.scoreWord(this.currentTilesHolder.getWord());
+			this.boggleGame.evaluateWord(this.currentTilesHolder.getWord());
 			this.currentTilesHolder.reset();
 			for (let tile of this.tiles) {
 				tile.reset();
@@ -233,25 +248,29 @@ class CurrentTilesHolder {
 	};
 
 	hasWordStarted = () => {
-		this.numTiles() > 0;
+		return this.numTiles() > 0;
 	};
 
 	addTile = (tile) => {
 		this.currentTiles.push(tile);
-		this.currentLettersHolder.innerText += tile.getLetter;
+		this.currentLettersHolder.innerText += tile.getLetter();
 	};
 
 	popTile = () => {
-		this.currentTiles.pop();
 		this.currentLettersHolder.innerText = this.currentLettersHolder.innerText.slice(0, -1);
+		return this.currentTiles.pop();
 	};
 
 	getTileBefore = () => {
 		return this.currentTiles.at(-2);
 	};
 
+	peek = () => {
+		return this.currentTiles.at(-1);
+	};
+
 	getWord = () => {
-		return this.currentTiles.map((tile) => tile.getLetter).join('');
+		return this.currentTiles.map((tile) => tile.getLetter()).join('');
 	};
 }
 
@@ -313,14 +332,28 @@ class Scorer {
 	constructor() {
 		WordSetGetter.fetchAndParse().then((wordSet) => {
 			this.wordSet = wordSet;
-			this.SCORING = { 1: 0, 2: 0, 3: 1, 4: 1, 5: 2, 6: 3, 7: 5, 8: 11 };
+			this.SCORING = { 3: 1, 4: 1, 5: 2, 6: 3, 7: 5, 8: 11 };
+			this.scoredWords = new Set();
 		});
 	}
 
-	scoreWord = (word) => {
-		if (this.wordSet.has(word)) {
-			let score = this.SCORING[`${Math.max(word.length, 8)}`];
-			console.log(score);
+	evaluateWord = (word) => {
+		word = word.toLowerCase();
+		console.log(word);
+		if (word.length > 2) {
+			if (!this.scoredWords.has(word)) {
+				if (this.wordSet.has(word)) {
+					let score = this.SCORING[`${Math.min(word.length, 8)}`];
+					this.scoredWords.add(word);
+					console.log(score);
+				} else {
+					console.log('Word not in dictionary.');
+				}
+			} else {
+				console.log('Word already played before.');
+			}
+		} else {
+			console.log('Word too short.');
 		}
 	};
 
