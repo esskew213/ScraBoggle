@@ -20,7 +20,9 @@
         <h1>SCRAMBLE WITH FRIENDS</h1>
 
         <div id="shuffle-button-div">
-            <button id="shuffle-button">START</button><button id="instructions-button">INSTRUCTIONS</button>
+            <button id="play-button">START</button><button id="instruction-button">INSTRUCTIONS</button>
+            <div id="instruction-popup">INSTRUCTIONS</div>
+            <div id="instruction-popup-close-button">x</div>
         </div>
     </header>
 
@@ -36,7 +38,7 @@
         <div id="main-game-container">
             <div id="boggle-container"></div>
             <div id="submit-button-div">
-                <div id="now-spelling"></div>
+                <div id="current-letters-holder"></div>
                 <button id="submit-button" disabled>SUBMIT</button>
             </div>
         </div>
@@ -52,16 +54,8 @@
             </div>
         </div>
     </div>
-    <footer>
-        <button id="restart-button">PLAY AGAIN?</button>
-    </footer>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
-        integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="scripts/boggleClass.js"></script>
-    <script src="scripts/timer.js"></script>
-    <script src="scripts/app.js"></script>
+    <script src="scripts/main.js"></script>
 
 
 </body>

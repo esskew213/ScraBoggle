@@ -126,7 +126,7 @@ h5 {
 	justify-content: center;
 	align-items: center;
 }
-.boggle-button {
+.tile-button {
 	min-width: 80px;
 	min-height: 80px;
 	background-color: var(--light-grey);
@@ -139,7 +139,7 @@ h5 {
 		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset;
 }
 
-#now-spelling {
+#current-letters-holder {
 	background-color: var(--light-grey);
 	width: 240px;
 	height: 50px;
@@ -158,11 +158,11 @@ h5 {
 .invalid-word {
 	color: rgb(129, 44, 44);
 }
-.boggle-button:disabled {
+.tile-button:disabled {
 	opacity: 0.5;
 }
 
-.boggle-button:hover {
+.tile-button:hover {
 	background-color: var(--yellow);
 }
 .selected {
