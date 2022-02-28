@@ -1,26 +1,19 @@
-#shuffle-button-div {
+#menu-buttons-div {
+	position: relative;
 	margin: 30px auto;
-}
-#submit-button-div {
 	display: flex;
-	flex-direction: row;
-	justify-content: stretch;
-	align-items: center;
+	flex-direction: flex-row;
+	justify-content: space-evenly;
 }
-#instructions-button,
-#shuffle-button,
-#submit-button,
-#restart-button {
+#instruction-button,
+#play-button {
 	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
 		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset;
-}
-#instructions-button,
-#shuffle-button,
-#restart-button {
 	/* font-family: 'Merriweather', serif; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin: 0 30px;
 	padding: 5px 10px;
 	height: 40px;
 	width: 150px;
@@ -32,29 +25,31 @@
 	/* border: 2px solid var(--orange); */
 	background-color: var(--orange);
 }
-#shuffle-button,
-#instructions-button {
-	display: inline-block;
-	margin: 0 10px;
+#instruction-button {
+	font-size: 0.8rem;
+	letter-spacing: 0.1rem;
 }
-#restart-button {
-	background-color: var(--light-grey);
-	margin: 50px auto;
-	width: 200px;
-}
-#submit-button {
-	/* font-family: 'Merriweather', serif; */
+#instruction-popup {
+	position: absolute;
+	right: 0;
 	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	background-color: rgba(255, 255, 255, 0.479);
+}
+#instruction-popup-close-button {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	margin-left: 20px;
-	padding: 5px 10px;
-	height: 50px;
-	width: 100px;
-	font-size: 1rem;
-	letter-spacing: 0.2rem;
-	font-weight: 400;
-	border-radius: 10px;
-	border: none;
-	background-color: var(--yellow);
+	width: 20px;
+	height: 20px;
+	border-radius: 30%;
+	background-color: var(--orange);
+}
+#instruction-popup p {
+	margin-top: 30px;
 }

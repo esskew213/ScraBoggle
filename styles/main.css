@@ -48,6 +48,7 @@ h1 {
 	align-items: flex-start;
 	animation: moveInRight 4s ease-out;
 }
+
 #main-game-container {
 	display: flex;
 	flex-direction: column;
@@ -68,7 +69,7 @@ h1 {
 	justify-content: flex-start;
 	align-items: center;
 	min-width: 160px;
-	height: 330px;
+	height: 375px;
 	background-color: var(--light-grey);
 	border-radius: 20px;
 	overflow: auto;
@@ -101,47 +102,10 @@ h5 {
 	margin: 0 auto;
 	text-align: center;
 }
-#boggle-container {
-	flex: 1 1 auto;
-	min-width: 360px;
-	min-height: 360px;
-	border-radius: 20px;
-	border: none;
-	background-color: var(--light-blue);
-
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
-		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset;
-	/* box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 80px, rgba(0, 0, 0, 0.3) 0px 0px 60px -30px,
-		rgba(10, 37, 64, 0.35) 0px 0px 20px 10px inset; */
-
-	/* text-align: center; */
-}
-.row {
-	flex: 0 0 auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.tile-button {
-	min-width: 80px;
-	min-height: 80px;
-	background-color: var(--light-grey);
-	color: var(--very-dark-blue);
-	border: 1px solid var(--light-blue);
-	border-radius: 10px;
-	font-size: 2em;
-	font-family: 'Merriweather', serif;
-	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
-		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset;
-}
 
 #current-letters-holder {
 	background-color: var(--light-grey);
-	width: 240px;
+	width: 375px;
 	height: 50px;
 	margin: 20px 0;
 	border-radius: 20px;
@@ -158,20 +122,7 @@ h5 {
 .invalid-word {
 	color: rgb(129, 44, 44);
 }
-.tile-button:disabled {
-	opacity: 0.5;
-}
 
-.tile-button:hover {
-	background-color: var(--yellow);
-}
-.selected {
-	background-color: var(--orange);
-	opacity: 1;
-}
-#restart-button {
-	visibility: hidden;
-}
 @keyframes gradient {
 	0% {
 		background-position: 0%;
