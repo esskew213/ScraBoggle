@@ -69,7 +69,7 @@ h1 {
 	justify-content: flex-start;
 	align-items: center;
 	min-width: 160px;
-	height: 375px;
+	height: 345px;
 	background-color: var(--light-grey);
 	border-radius: 20px;
 	overflow: auto;
