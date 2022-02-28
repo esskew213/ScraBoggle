@@ -333,10 +333,12 @@ class Tile {
 
 	enable = () => {
 		this.button.disabled = false;
+		this.button.style.pointerEvents = `auto`;
 	};
 
 	disable = () => {
 		this.button.disabled = true;
+		this.button.style.pointerEvents = `none`;
 	};
 
 	getHTMLButton = () => {
