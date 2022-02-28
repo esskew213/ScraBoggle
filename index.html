@@ -18,18 +18,15 @@
 </head>
 
 <body>
+
     <header>
         <h1>SCRAMBLE WITH FRIENDS</h1>
 
         <div id="menu-buttons-div">
             <button id="play-button">START</button>
-            <button id="instruction-button">INSTRUCTIONS</button>
+            <button class="instruction-button">INSTRUCTIONS</button>
         </div>
-        <div id="instruction-popup">
-            <div id="instruction-popup-close-button">x</div>
-            <p>blah blah blah</p>
 
-        </div>
     </header>
 
     <div id="overall-game-container">
@@ -57,6 +54,18 @@
             </div>
         </div>
     </div>
+    </div>
+    <div class="instruction-popup">
+
+        <p>
+            <span class="instruction-popup-close-button">&times;</span>
+            Welcome to Scramble With Friends! You have 60 seconds to find as many words (three letters or longer) as
+            you can. Left-click and drag
+            your mouse to select and un-select letters. Release the click to submit your word.
+            <br /> <br />
+            Happy finding!
+        </p>
+
     </div>
     <script src="scripts/main.js"></script>
 

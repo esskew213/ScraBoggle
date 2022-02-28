@@ -5,7 +5,7 @@
 	flex-direction: flex-row;
 	justify-content: space-evenly;
 }
-#instruction-button,
+.instruction-button,
 #play-button {
 	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
 		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset;
@@ -24,20 +24,43 @@
 	border: none;
 	/* border: 2px solid var(--orange); */
 	background-color: var(--orange);
+	transition: all 0.4s ease;
 }
-#instruction-button {
+.instruction-button {
 	font-size: 0.8rem;
 	letter-spacing: 0.1rem;
 }
-#instruction-popup {
-	position: absolute;
-	right: 0;
-	display: flex;
-	flex-direction: column;
-	padding: 10px;
-	background-color: rgba(255, 255, 255, 0.479);
+
+.instruction-popup {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	opacity: 0;
+	visibility: hidden;
+	transform: scale(1.1);
+	transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
-#instruction-popup-close-button {
+.instruction-popup p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 40px 20px 20px 20px;
+	width: 300px;
+	border-radius: 0.5rem;
+	background-color: white;
+	text-align: justify;
+}
+.show-popup {
+	opacity: 1;
+	visibility: visible;
+	transform: scale(1.0);
+	transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+.instruction-popup-close-button {
 	position: absolute;
 	right: 10px;
 	top: 10px;
@@ -49,7 +72,20 @@
 	height: 20px;
 	border-radius: 30%;
 	background-color: var(--orange);
+	transition: all 0.4s ease;
 }
-#instruction-popup p {
-	margin-top: 30px;
+.instruction-popup p {
+	margin: 30px 10px;
+}
+#play-button:enabled:hover,
+.instruction-button:enabled:hover {
+	background-color: var(--yellow);
+	transform: translateY(-4px);
+	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
+		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset, rgba(0, 0, 0, 0.8) 2px 2px 5px 5px;
+}
+.instruction-popup-close-button:hover {
+	background-color: var(--yellow);
+	transform: translateY(-2px);
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px;
 }

@@ -33,7 +33,7 @@ class Menu {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
 		this.playButton = document.querySelector('#play-button');
-		this.instructionButton = document.querySelector('#instruction-button');
+		this.instructionButton = document.querySelector('.instruction-button');
 		this.instructionPopup = new InstructionPopup();
 
 		this.playButton.addEventListener('click', this.boggleGame.start);
@@ -54,19 +54,19 @@ class Menu {
 
 class InstructionPopup {
 	constructor() {
-		this.container = document.querySelector('#instruction-popup');
-		this.closeButton = document.querySelector('#instruction-popup-close-button');
+		this.container = document.querySelector('.instruction-popup');
+		this.closeButton = document.querySelector('.instruction-popup-close-button');
 
 		this.closeButton.addEventListener('click', this.hide);
 	}
 
 	open = () => {
-		this.container.style.display = `block`;
+		this.container.classList.add('show-popup');
 		this.closeButton.disabled = false;
 	};
 
 	hide = () => {
-		this.container.style.display = `none`;
+		this.container.classList.remove('show-popup');
 		this.closeButton.disabled = true;
 	};
 }
