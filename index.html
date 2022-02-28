@@ -9,8 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,400&family=Nunito&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles/buttons.css">
+
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/boggle-container.css">
     <link rel="stylesheet" href="styles/timerstyle.css">
     <title>Boggle</title>
 </head>
@@ -19,15 +21,21 @@
     <header>
         <h1>SCRAMBLE WITH FRIENDS</h1>
 
-        <div id="shuffle-button-div">
-            <button id="shuffle-button">START</button><button id="instructions-button">INSTRUCTIONS</button>
+        <div id="menu-buttons-div">
+            <button id="play-button">START</button>
+            <button id="instruction-button">INSTRUCTIONS</button>
+        </div>
+        <div id="instruction-popup">
+            <div id="instruction-popup-close-button">x</div>
+            <p>blah blah blah</p>
+
         </div>
     </header>
 
     <div id="overall-game-container">
         <div class="timer">
             <div class="controls">
-                <input id="duration" value="">
+                <input id="seconds-left" value="">
             </div>
             <svg class="dial">
                 <circle cx="140" cy="60" r="48" transform="rotate(-90 100 100)" />
@@ -35,11 +43,7 @@
         </div>
         <div id="main-game-container">
             <div id="boggle-container"></div>
-            <div id="submit-button-div">
-                <div id="now-spelling"></div>
-
-                <button id="submit-button" disabled>SUBMIT</button>
-            </div>
+            <div id="current-letters-holder"></div>
         </div>
         <div id="side-game-container">
 
@@ -53,16 +57,8 @@
             </div>
         </div>
     </div>
-    <footer>
-        <button id="restart-button">PLAY AGAIN?</button>
-    </footer>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
-        integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="scripts/boggleClass.js"></script>
-    <script src="scripts/timer.js"></script>
-    <script src="scripts/app_v1.2.js"></script>
+    <script src="scripts/main.js"></script>
 
 
 </body>
