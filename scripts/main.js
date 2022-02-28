@@ -305,6 +305,7 @@ class Tile {
 		this.button = document.createElement('button');
 		this.button.setAttribute('id', `tile-button-${idx}`);
 		this.button.classList.add(`tile-button`);
+
 		this.button.addEventListener('mousedown', () => this.boggleBoard.startWord(this));
 		this.button.addEventListener('mouseover', () => this.boggleBoard.addLetterToWord(this));
 	}
@@ -314,7 +315,16 @@ class Tile {
 			letter = 'Qu';
 		}
 		this.letter = letter;
+
+		this.animate();
 		this.button.innerText = letter;
+	};
+
+	animate = () => {
+		this.button.classList.add('tile-flip');
+		setTimeout(() => {
+			this.button.classList.remove('tile-flip');
+		}, 1000);
 	};
 
 	getLetter = () => {
