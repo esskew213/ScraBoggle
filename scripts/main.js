@@ -256,6 +256,11 @@ class CurrentTilesHolder {
 		this.currentTiles = [];
 		this.currentLettersHolder = document.querySelector('#current-letters-holder');
 	}
+	printMsg = (msg) => {
+		this.currentLettersHolder.innerText = msg;
+
+		setTimeout(() => (this.currentLettersHolder.innerText = ''), 300);
+	};
 
 	reset = () => {
 		this.currentTiles = [];
