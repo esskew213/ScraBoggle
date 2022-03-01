@@ -6,7 +6,7 @@ const height = 300;
 const engine = Engine.create();
 
 //decrease for slower motion
-engine.timing.timeScale = 0.6;
+engine.timing.timeScale = 0.5;
 // unpack the world object that is created when engine is created
 const { world } = engine;
 const render = Render.create({
@@ -53,11 +53,15 @@ const rightWall = Bodies.rectangle(width - wallThickness / 2, height / 2, wallTh
 World.add(world, [ ground, ceiling, leftWall, rightWall ]);
 
 // make some shapes, randomising starting position
-const squareLength = 40;
-for (let i = 0; i < 5; i++) {
+const squareLength = 50;
+for (let i = 0; i < 4; i++) {
 	const tile = Bodies.rectangle(
-		Math.random() * (width - wallThickness - squareLength / 2) + wallThickness + squareLength / 2,
-		Math.random() * (height - wallThickness - squareLength / 2) + wallThickness + squareLength / 2,
+		wallThickness +
+			squareLength / 2 +
+			Math.random() * (width - wallThickness - squareLength / 2 - (wallThickness + squareLength / 2)),
+		wallThickness +
+			squareLength / 2 +
+			Math.random() * (height - wallThickness - squareLength / 2 - (wallThickness + squareLength / 2)),
 		squareLength,
 		squareLength,
 		{

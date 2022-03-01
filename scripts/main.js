@@ -38,7 +38,7 @@ class LoadingPage {
 	}
 	disappear = () => {
 		this.boggleGame.loadingPage.classList.add('remove-loading-page');
-		setTimeout(() => this.boggleGame.loadingPage.remove(), 5000);
+		setTimeout(() => this.boggleGame.loadingPage.remove(), 3600);
 	};
 }
 class Menu {
