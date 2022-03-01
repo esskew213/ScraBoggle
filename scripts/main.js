@@ -405,7 +405,7 @@ class Scorer {
 	reset = () => {
 		this.scoredWords = new Set();
 		this.totalScore = 0;
-		this.totalScoreHTML.innerText = '0';
+		this.totalScoreHTML.innerText = '';
 		this.guessedWordsHTML.innerText = '';
 	};
 }
