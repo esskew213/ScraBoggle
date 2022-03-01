@@ -264,7 +264,7 @@ class CurrentTilesHolder {
 
 	reset = () => {
 		this.currentTiles = [];
-		this.currentLettersHolder.innerText = '';
+		setTimeout(() => (this.currentLettersHolder.innerText = ''), 300);
 	};
 
 	numTiles = () => {
