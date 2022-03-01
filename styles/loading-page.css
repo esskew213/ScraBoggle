@@ -7,21 +7,33 @@
 	background-color: rgba(0, 0, 0, 1);
 	opacity: 1;
 	visibility: visible;
-	transition: visibility 4s linear, opacity 2s linear;
 	/* transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s; */
+}
+.loading-text {
+	position: absolute;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: var(--light-grey);
 }
 .loading-animation {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	padding: 40px 20px 20px 20px;
-	width: 300px;
-	border-radius: 0.5rem;
-	background-color: white;
-	text-align: justify;
 }
 .remove-loading-page {
-	opacity: 0;
-	visibility: hidden;
+	animation: loading-fadeout 5s ease-in;
+}
+@keyframes loading-fadeout {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }

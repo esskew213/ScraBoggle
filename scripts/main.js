@@ -34,11 +34,11 @@ class LoadingPage {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
 		this.boggleGame.loadingPage = document.querySelector('.loading-page');
-		setTimeout(this.disappear, 5000);
+		this.disappear();
 	}
 	disappear = () => {
 		this.boggleGame.loadingPage.classList.add('remove-loading-page');
-		setTimeout(() => this.boggleGame.loadingPage.remove(), 6000);
+		setTimeout(() => this.boggleGame.loadingPage.remove(), 5000);
 	};
 }
 class Menu {
