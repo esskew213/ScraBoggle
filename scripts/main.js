@@ -159,8 +159,10 @@ class BoggleBoard {
 		for (let i = 0; i < this.tiles.length; i++) {
 			let tile = this.tiles[i];
 			let randomLetter = this.boggleDice[i][Math.floor(Math.random() * 6)];
+			tile.disable();
 			tile.setLetter(randomLetter);
-			tile.enable();
+			tile.animate();
+			setTimeout(() => tile.enable(), 1000);
 		}
 	};
 
@@ -322,7 +324,6 @@ class Tile {
 		}
 		this.letter = letter;
 
-		this.animate();
 		this.button.innerText = letter;
 	};
 
