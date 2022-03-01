@@ -165,6 +165,7 @@ class BoggleBoard {
 	};
 
 	freeze = () => {
+		this.endWord();
 		for (const tile of this.tiles) {
 			tile.disable();
 		}
