@@ -3,6 +3,7 @@ class BoggleGame {
 		// initialises menu bar, timer, scorer, and boggle board of letters
 		this.menu = new Menu(this);
 		this.timer = new Timer(this);
+		this.loader = new LoadingPage(this);
 		this.boggleBoard = new BoggleBoard(this);
 		this.scorer = new Scorer(this);
 
@@ -29,6 +30,17 @@ class BoggleGame {
 	};
 }
 
+class LoadingPage {
+	constructor(boggleGame) {
+		this.boggleGame = boggleGame;
+		this.boggleGame.loadingPage = document.querySelector('.loading-page');
+		setTimeout(this.disappear, 5000);
+	}
+	disappear = () => {
+		this.boggleGame.loadingPage.classList.add('remove-loading-page');
+		setTimeout(() => this.boggleGame.loadingPage.remove(), 6000);
+	};
+}
 class Menu {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
