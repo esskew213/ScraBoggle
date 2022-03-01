@@ -4,7 +4,7 @@ class BoggleGame {
 		this.menu = new Menu(this);
 		this.timer = new Timer(this);
 		this.boggleBoard = new BoggleBoard(this);
-		this.scorer = new Scorer();
+		this.scorer = new Scorer(this);
 
 		this.boggleBoard.freeze();
 	}
@@ -365,8 +365,10 @@ class Utils {
 }
 
 class Scorer {
-	constructor() {
+	constructor(boggleGame) {
 		WordSetGetter.fetchAndParse().then((wordSet) => {
+			this.boggleGame = boggleGame;
+			this.boggleContainer = this.boggleGame.boggleBoard.boggleGridContainer;
 			this.wordSet = wordSet;
 			this.SCORING = { 3: 1, 4: 1, 5: 2, 6: 3, 7: 5, 8: 11 };
 			this.guessedWordsHTML = document.querySelector('#guessed-words');
@@ -393,6 +395,7 @@ class Scorer {
 					this.guessedWordsHTML.append(newWord);
 				} else {
 					console.log('Word not in dictionary.');
+					this.vibrate();
 				}
 			} else {
 				console.log('Word already played before.');
@@ -401,7 +404,12 @@ class Scorer {
 			console.log('Word too short.');
 		}
 	};
-
+	vibrate = () => {
+		this.boggleContainer.classList.add('vibrate');
+		setTimeout(() => {
+			this.boggleContainer.classList.remove('vibrate');
+		}, 500);
+	};
 	reset = () => {
 		this.scoredWords = new Set();
 		this.totalScore = 0;
