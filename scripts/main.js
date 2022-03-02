@@ -81,8 +81,18 @@ class Timer {
 		this.perimeter = this.circle.getAttribute('r') * 2 * Math.PI;
 		this.circle.setAttribute('stroke-dasharray', this.perimeter);
 	}
-
+	getDuration = () => {
+		let duration = parseInt(this.secondsLeftHTML.value);
+		console.log(duration);
+		console.log(this.maxSeconds);
+		if (duration && duration > 0) {
+			this.maxSeconds = duration;
+		} else {
+			this.maxSeconds = 30;
+		}
+	};
 	reset = () => {
+		this.getDuration();
 		this.currentSeconds = this.maxSeconds;
 		this.tick();
 		this.timerID = setInterval(this.tick, 1000);
