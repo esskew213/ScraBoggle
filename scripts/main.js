@@ -5,7 +5,7 @@ class BoggleGame {
 		this.timer = new Timer(this);
 		this.boggleBoard = new BoggleBoard(this);
 		this.scorer = new Scorer(this);
-
+		this.highScore = 0;
 		this.boggleBoard.freeze();
 	}
 
@@ -21,6 +21,7 @@ class BoggleGame {
 	end = () => {
 		this.menu.enable();
 		this.boggleBoard.freeze();
+		this.scorer.updateHighScore();
 	};
 
 	//
@@ -409,6 +410,7 @@ class Scorer {
 
 			this.guessedWordsHTML = document.querySelector('#guessed-words');
 			this.totalScoreHTML = document.querySelector('#total-score-number');
+			this.highScoreHTML = document.querySelector('#high-score-number');
 		});
 	}
 
@@ -460,6 +462,12 @@ class Scorer {
 		this.totalScore = 0;
 		this.totalScoreHTML.innerText = '';
 		this.guessedWordsHTML.innerText = '';
+	};
+	updateHighScore = () => {
+		if (this.totalScore > this.boggleGame.highScore) {
+			this.boggleGame.highScore = this.totalScore;
+		}
+		this.highScoreHTML.innerText = this.boggleGame.highScore;
 	};
 }
 
