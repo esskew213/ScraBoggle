@@ -3,6 +3,7 @@ class BoggleGame {
 		// initialises menu bar, timer, scorer, and boggle board of letters
 		this.menu = new Menu(this);
 		this.timer = new Timer(this);
+		this.loader = new LoadingPage(this);
 		this.boggleBoard = new BoggleBoard(this);
 		this.scorer = new Scorer(this);
 		this.highScore = 0;
@@ -30,6 +31,17 @@ class BoggleGame {
 	};
 }
 
+class LoadingPage {
+	constructor(boggleGame) {
+		this.boggleGame = boggleGame;
+		this.boggleGame.loadingPage = document.querySelector('.loading-page');
+		this.disappear();
+	}
+	disappear = () => {
+		this.boggleGame.loadingPage.classList.add('remove-loading-page');
+		setTimeout(() => this.boggleGame.loadingPage.remove(), 3600);
+	};
+}
 class Menu {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
@@ -197,8 +209,10 @@ class BoggleBoard {
 		for (let i = 0; i < this.tiles.length; i++) {
 			let tile = this.tiles[i];
 			let randomLetter = this.boggleDice[i][Math.floor(Math.random() * 6)];
+			tile.disable();
 			tile.setLetter(randomLetter);
-			tile.enable();
+			tile.animate();
+			setTimeout(() => tile.enable(), 1000);
 		}
 	};
 
@@ -361,7 +375,6 @@ class Tile {
 			letter = 'Qu';
 		}
 		this.letter = letter;
-
 		this.animate();
 		this.button.innerHTML = `<p class="tile-letter">${letter}</p><p class="tile-score">${letterScore}</p>`;
 	};

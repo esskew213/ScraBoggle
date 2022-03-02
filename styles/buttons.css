@@ -72,7 +72,7 @@
 	height: 20px;
 	border-radius: 30%;
 	background-color: var(--orange);
-	transition: all 0.4s ease;
+	transition: all 0.2s ease;
 }
 .instruction-popup p {
 	margin: 30px 10px;
@@ -84,8 +84,23 @@
 	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
 		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset, rgba(0, 0, 0, 0.8) 2px 2px 5px 5px;
 }
+#play-button:enabled:active,
+.instruction-button:enabled:active {
+	background-color: var(--light-blue);
+	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
+		rgba(0, 0, 0, 0.1) 0px -20px 20px 0px inset, rgba(0, 0, 0, 1) 0px 1px 2px 2px;
+	transform: translateY(-2px);
+}
 .instruction-popup-close-button:hover {
 	background-color: var(--yellow);
 	transform: translateY(-2px);
 	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px;
+	cursor: default;
+}
+
+.instruction-popup-close-button:active {
+	background-color: var(--light-blue);
+	transform: translateY(-1px);
+	box-shadow: rgba(0, 0, 0, 0.8) 0px 1px 1px 0px;
+	cursor: default;
 }
