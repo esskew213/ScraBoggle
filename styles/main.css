@@ -75,7 +75,9 @@ h1 {
 	overflow: auto;
 }
 h5 {
+	display: inline-block;
 	margin: 0 auto;
+	line-height: 0;
 }
 #total-score-div {
 	display: flex;
@@ -101,6 +103,7 @@ h5 {
 .guessed-words {
 	margin: 0 auto;
 	text-align: center;
+	overflow: auto;
 }
 
 #current-letters-holder {
@@ -122,7 +125,6 @@ h5 {
 .invalid-word {
 	color: rgb(129, 44, 44);
 }
-
 @keyframes gradient {
 	0% {
 		background-position: 0%;
