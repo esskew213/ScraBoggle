@@ -419,7 +419,10 @@ class Scorer {
 			if (!this.scoredWords.has(word)) {
 				if (this.wordSet.has(word)) {
 					// Internal logic
-					let score = this.SCORING[`${Math.min(word.length, 8)}`];
+					const letterScores = word
+						.split('')
+						.map((letter) => this.boggleGame.boggleBoard.SCRABBLESCORING[`${letter}`]);
+					let score = letterScores.reduce((previousValue, currentValue) => previousValue + currentValue);
 					this.totalScore += score;
 					this.scoredWords.add(word);
 
