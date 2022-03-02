@@ -336,6 +336,7 @@ class Tile {
 		this.boggleBoard = boggleBoard;
 		this.idx = idx;
 		this.button = document.createElement('button');
+
 		this.button.setAttribute('id', `tile-button-${idx}`);
 		this.button.classList.add(`tile-button`);
 
@@ -344,15 +345,15 @@ class Tile {
 	}
 
 	setLetter = (letter) => {
+		const letterScore = this.boggleBoard.SCRABBLESCORING[`${letter.toLowerCase()}`];
 		if (letter === 'Q') {
 			letter = 'Qu';
 		}
 		this.letter = letter;
 
 		this.animate();
-		this.button.innerText = letter;
+		this.button.innerHTML = `<p class="tile-letter">${letter}</p><p class="tile-score">${letterScore}</p>`;
 	};
-
 	animate = () => {
 		this.button.classList.add('tile-flip');
 		setTimeout(() => {
@@ -405,6 +406,7 @@ class Scorer {
 			this.currentTilesHolder = this.boggleGame.boggleBoard.currentTilesHolder;
 			this.wordSet = wordSet;
 			this.SCORING = { 3: 1, 4: 1, 5: 2, 6: 3, 7: 5, 8: 11 };
+
 			this.guessedWordsHTML = document.querySelector('#guessed-words');
 			this.totalScoreHTML = document.querySelector('#total-score-number');
 		});
