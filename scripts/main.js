@@ -65,6 +65,7 @@ class Menu {
 		this.countdownPopup = document.querySelector('.next-player-countdown-div');
 		this.countdownText = document.querySelector('.next-player-countdown');
 		this.playButton = document.querySelector('#play-button');
+		this.numPlayersField = document.querySelector('select');
 		this.instructionButton = document.querySelector('.instruction-button');
 		this.instructionPopup = new InstructionPopup();
 		this.playButton.addEventListener('click', this.boggleGame.start);
@@ -74,16 +75,17 @@ class Menu {
 	enable = () => {
 		this.playButton.disabled = false;
 		this.instructionButton.disabled = false;
+		this.numPlayersField.disabled = false;
 	};
 
 	disable = () => {
 		this.playButton.disabled = true;
 		this.instructionButton.disabled = true;
+		this.numPlayersField.disabled = true;
 		this.instructionPopup.hide();
 	};
 	getNumPlayers = () => {
-		console.log(document.querySelector('select').value);
-		return document.querySelector('select').value;
+		return parseInt(this.numPlayersField.value);
 	};
 	showCountdown = () => {
 		this.countdownPopup.classList.add('show-countdown');
@@ -530,6 +532,9 @@ class Scorer {
 			this.boggleGame.highScore = this.totalScore;
 		}
 		this.highScoreHTML.innerText = this.boggleGame.highScore;
+	};
+	resetHighScore = () => {
+		this.highScoreHTML.innerText = '';
 	};
 }
 
