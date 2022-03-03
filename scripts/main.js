@@ -26,14 +26,18 @@ class BoggleGame {
 			this.menu.enable();
 			this.boggleBoard.freeze();
 		} else {
-			setTimeout(() => this.startNextPlayer(), 3000);
+			this.boggleBoard.freeze();
+			this.menu.showCountdown();
+			setTimeout(() => {
+				this.startNextPlayer();
+			}, 3000);
 		}
-
 		this.scorer.updateHighScore();
 	};
 	startNextPlayer = () => {
 		this.timer.reset();
 		this.scorer.reset();
+		this.menu.hideCountdown();
 		this.boggleBoard.nextPlayerReset();
 		this.numRoundsLeft -= 1;
 	};
@@ -58,7 +62,8 @@ class LoadingPage {
 class Menu {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
-
+		this.countdownPopup = document.querySelector('.next-player-countdown-div');
+		this.countdownText = document.querySelector('.next-player-countdown');
 		this.playButton = document.querySelector('#play-button');
 		this.instructionButton = document.querySelector('.instruction-button');
 		this.instructionPopup = new InstructionPopup();
@@ -79,6 +84,16 @@ class Menu {
 	getNumPlayers = () => {
 		console.log(document.querySelector('select').value);
 		return document.querySelector('select').value;
+	};
+	showCountdown = () => {
+		this.countdownPopup.classList.add('show-countdown');
+		this.countdownText.innerText = 'NEXT PLAYER IN 3...';
+		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 2...'), 1000);
+		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 1...'), 2000);
+	};
+
+	hideCountdown = () => {
+		this.countdownPopup.classList.remove('show-countdown');
 	};
 }
 
