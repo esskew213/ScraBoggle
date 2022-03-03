@@ -129,7 +129,9 @@ class Timer {
 		let duration = parseInt(this.secondsLeftHTML.value);
 		console.log(duration);
 		console.log(this.maxSeconds);
-		if (duration && duration > 0) {
+		if (this.boggleGame.numRoundsLeft > 1) {
+			this.maxSeconds = 30;
+		} else if (duration && duration > 0) {
 			this.maxSeconds = duration;
 		} else {
 			this.maxSeconds = 30;
