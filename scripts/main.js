@@ -12,17 +12,30 @@ class BoggleGame {
 
 	// when game begins or restarts, disable the menu buttons, reset the timer and scores, reset the board
 	start = () => {
+		this.numRoundsLeft = this.menu.getNumPlayers();
 		this.menu.disable();
 		this.timer.reset();
 		this.boggleBoard.reset();
 		this.scorer.reset();
+		this.numRoundsLeft -= 1;
 	};
 
 	// when game has ended (time is up), re-enable menu so that player can play again. disable board buttons
 	end = () => {
-		this.menu.enable();
-		this.boggleBoard.freeze();
+		if (this.numRoundsLeft === 0) {
+			this.menu.enable();
+			this.boggleBoard.freeze();
+		} else {
+			setTimeout(() => this.startNextPlayer(), 3000);
+		}
+
 		this.scorer.updateHighScore();
+	};
+	startNextPlayer = () => {
+		this.timer.reset();
+		this.scorer.reset();
+		this.boggleBoard.nextPlayerReset();
+		this.numRoundsLeft -= 1;
 	};
 
 	//
@@ -45,10 +58,10 @@ class LoadingPage {
 class Menu {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
+
 		this.playButton = document.querySelector('#play-button');
 		this.instructionButton = document.querySelector('.instruction-button');
 		this.instructionPopup = new InstructionPopup();
-
 		this.playButton.addEventListener('click', this.boggleGame.start);
 		this.instructionButton.addEventListener('click', this.instructionPopup.open);
 	}
@@ -62,6 +75,10 @@ class Menu {
 		this.playButton.disabled = true;
 		this.instructionButton.disabled = true;
 		this.instructionPopup.hide();
+	};
+	getNumPlayers = () => {
+		console.log(document.querySelector('select').value);
+		return document.querySelector('select').value;
 	};
 }
 
@@ -215,7 +232,12 @@ class BoggleBoard {
 			setTimeout(() => tile.enable(), 1000);
 		}
 	};
-
+	nextPlayerReset = () => {
+		for (let i = 0; i < this.tiles.length; i++) {
+			let tile = this.tiles[i];
+			tile.enable();
+		}
+	};
 	freeze = () => {
 		this.endWord();
 		for (const tile of this.tiles) {
