@@ -70,6 +70,10 @@ class Menu {
 		this.instructionPopup = new InstructionPopup();
 		this.playButton.addEventListener('click', this.boggleGame.start);
 		this.instructionButton.addEventListener('click', this.instructionPopup.open);
+		this.numPlayersField.addEventListener('change', () => {
+			this.boggleGame.scorer.resetHighScore();
+			this.boggleGame.scorer.reset();
+		});
 	}
 
 	enable = () => {
