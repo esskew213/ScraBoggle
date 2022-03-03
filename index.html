@@ -11,8 +11,9 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/multiplayer.css">
+
     <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/multiplayer.css">
     <link rel="stylesheet" href="styles/boggle-container.css">
     <link rel="stylesheet" href="styles/timerstyle.css">
     <link rel="stylesheet" href="styles/loading-page.css">
@@ -22,16 +23,21 @@
 <body>
 
     <header>
-        <h1>SCRABOGGLE</h1>
-
-        <div id="menu-buttons-div">
-            <button id="play-button">START</button>
-            <button class="instruction-button">INSTRUCTIONS</button>
+        <div class="player-selection">
+            <p>HOW MANY PEOPLE ARE PLAYING TODAY?</p>
             <select name="num-players" id="num-players">
                 <option value="1">ONE</option>
                 <option value="2">TWO</option>
                 <option value="3">THREE</option>
             </select>
+        </div>
+        <h1>SCRABOGGLE WITH FRIENDS</h1>
+
+        <div id="menu-buttons-div">
+
+            <button id="play-button">START</button>
+            <button class="instruction-button">INSTRUCTIONS</button>
+
         </div>
 
     </header>
