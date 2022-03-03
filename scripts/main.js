@@ -13,8 +13,12 @@ class BoggleGame {
 	// when game begins or restarts, disable the menu buttons, reset the timer and scores, reset the board
 	start = () => {
 		this.numRoundsLeft = this.menu.getNumPlayers();
+		if (this.numRoundsLeft > 1) {
+			this.scorer.resetHighScore();
+		}
 		this.menu.disable();
 		this.timer.reset();
+
 		this.boggleBoard.reset();
 		this.scorer.reset();
 		this.numRoundsLeft -= 1;
@@ -30,7 +34,7 @@ class BoggleGame {
 			this.menu.showCountdown();
 			setTimeout(() => {
 				this.startNextPlayer();
-			}, 3000);
+			}, 5000);
 		}
 		this.scorer.updateHighScore();
 	};
@@ -94,8 +98,8 @@ class Menu {
 	showCountdown = () => {
 		this.countdownPopup.classList.add('show-countdown');
 		this.countdownText.innerText = 'NEXT PLAYER IN 3...';
-		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 2...'), 1000);
-		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 1...'), 2000);
+		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 2...'), 2000);
+		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 1...'), 4000);
 	};
 
 	hideCountdown = () => {
@@ -135,8 +139,8 @@ class Timer {
 		let duration = parseInt(this.secondsLeftHTML.value);
 		console.log(duration);
 		console.log(this.maxSeconds);
-		if (this.boggleGame.numRoundsLeft > 1) {
-			this.maxSeconds = 30;
+		if (this.boggleGame.menu.getNumPlayers() > 1) {
+			this.maxSeconds = 10;
 		} else if (duration && duration > 0) {
 			this.maxSeconds = duration;
 		} else {
@@ -538,6 +542,7 @@ class Scorer {
 		this.highScoreHTML.innerText = this.boggleGame.highScore;
 	};
 	resetHighScore = () => {
+		this.boggleGame.highScore = 0;
 		this.highScoreHTML.innerText = '';
 	};
 }
