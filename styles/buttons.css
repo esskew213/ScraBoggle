@@ -5,6 +5,19 @@
 	flex-direction: flex-row;
 	justify-content: space-evenly;
 }
+select {
+	display: inline-block;
+	margin: 0 30px;
+	border: none;
+	letter-spacing: 0.2rem;
+	font-weight: 400;
+	border-radius: 10px;
+	padding: 5px 10px;
+	height: 40px;
+}
+select:focus {
+	outline: none;
+}
 .instruction-button,
 #play-button {
 	box-shadow: rgba(0, 0, 0, 0.17) 0px -3px 5px 5px inset, rgba(0, 0, 0, 0.15) 0px -6px 8px 5px inset,
