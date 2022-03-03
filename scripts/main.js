@@ -6,22 +6,40 @@ class BoggleGame {
 		this.loader = new LoadingPage(this);
 		this.boggleBoard = new BoggleBoard(this);
 		this.scorer = new Scorer(this);
-
+		this.highScore = 0;
 		this.boggleBoard.freeze();
 	}
 
 	// when game begins or restarts, disable the menu buttons, reset the timer and scores, reset the board
 	start = () => {
+		this.numRoundsLeft = this.menu.getNumPlayers();
 		this.menu.disable();
 		this.timer.reset();
 		this.boggleBoard.reset();
 		this.scorer.reset();
+		this.numRoundsLeft -= 1;
 	};
 
 	// when game has ended (time is up), re-enable menu so that player can play again. disable board buttons
 	end = () => {
-		this.menu.enable();
-		this.boggleBoard.freeze();
+		if (this.numRoundsLeft === 0) {
+			this.menu.enable();
+			this.boggleBoard.freeze();
+		} else {
+			this.boggleBoard.freeze();
+			this.menu.showCountdown();
+			setTimeout(() => {
+				this.startNextPlayer();
+			}, 3000);
+		}
+		this.scorer.updateHighScore();
+	};
+	startNextPlayer = () => {
+		this.timer.reset();
+		this.scorer.reset();
+		this.menu.hideCountdown();
+		this.boggleBoard.nextPlayerReset();
+		this.numRoundsLeft -= 1;
 	};
 
 	//
@@ -44,10 +62,12 @@ class LoadingPage {
 class Menu {
 	constructor(boggleGame) {
 		this.boggleGame = boggleGame;
+		this.countdownPopup = document.querySelector('.next-player-countdown-div');
+		this.countdownText = document.querySelector('.next-player-countdown');
 		this.playButton = document.querySelector('#play-button');
+		this.numPlayersField = document.querySelector('select');
 		this.instructionButton = document.querySelector('.instruction-button');
 		this.instructionPopup = new InstructionPopup();
-
 		this.playButton.addEventListener('click', this.boggleGame.start);
 		this.instructionButton.addEventListener('click', this.instructionPopup.open);
 	}
@@ -55,12 +75,27 @@ class Menu {
 	enable = () => {
 		this.playButton.disabled = false;
 		this.instructionButton.disabled = false;
+		this.numPlayersField.disabled = false;
 	};
 
 	disable = () => {
 		this.playButton.disabled = true;
 		this.instructionButton.disabled = true;
+		this.numPlayersField.disabled = true;
 		this.instructionPopup.hide();
+	};
+	getNumPlayers = () => {
+		return parseInt(this.numPlayersField.value);
+	};
+	showCountdown = () => {
+		this.countdownPopup.classList.add('show-countdown');
+		this.countdownText.innerText = 'NEXT PLAYER IN 3...';
+		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 2...'), 1000);
+		setTimeout(() => (this.countdownText.innerText = 'NEXT PLAYER IN 1...'), 2000);
+	};
+
+	hideCountdown = () => {
+		this.countdownPopup.classList.remove('show-countdown');
 	};
 }
 
@@ -92,8 +127,20 @@ class Timer {
 		this.perimeter = this.circle.getAttribute('r') * 2 * Math.PI;
 		this.circle.setAttribute('stroke-dasharray', this.perimeter);
 	}
-
+	getDuration = () => {
+		let duration = parseInt(this.secondsLeftHTML.value);
+		console.log(duration);
+		console.log(this.maxSeconds);
+		if (this.boggleGame.numRoundsLeft > 1) {
+			this.maxSeconds = 30;
+		} else if (duration && duration > 0) {
+			this.maxSeconds = duration;
+		} else {
+			this.maxSeconds = 30;
+		}
+	};
 	reset = () => {
+		this.getDuration();
 		this.currentSeconds = this.maxSeconds;
 		this.tick();
 		this.timerID = setInterval(this.tick, 1000);
@@ -141,7 +188,34 @@ class BoggleBoard {
 			'UWILRG',
 			'PACEMD'
 		];
-
+		this.SCRABBLESCORING = {
+			a: 1,
+			b: 4,
+			c: 4,
+			d: 2,
+			e: 1,
+			f: 4,
+			g: 3,
+			h: 3,
+			i: 1,
+			j: 10,
+			k: 5,
+			l: 2,
+			m: 4,
+			n: 2,
+			o: 1,
+			p: 4,
+			q: 10,
+			r: 1,
+			s: 1,
+			t: 1,
+			u: 2,
+			v: 5,
+			w: 4,
+			x: 8,
+			y: 3,
+			z: 10
+		};
 		for (let idx = 0; idx < this.DIAMETER ** 2; idx++) {
 			this.tiles.push(new Tile(idx, this));
 		}
@@ -177,7 +251,12 @@ class BoggleBoard {
 			setTimeout(() => tile.enable(), 1000);
 		}
 	};
-
+	nextPlayerReset = () => {
+		for (let i = 0; i < this.tiles.length; i++) {
+			let tile = this.tiles[i];
+			tile.enable();
+		}
+	};
 	freeze = () => {
 		this.endWord();
 		for (const tile of this.tiles) {
@@ -323,6 +402,7 @@ class Tile {
 		this.boggleBoard = boggleBoard;
 		this.idx = idx;
 		this.button = document.createElement('button');
+
 		this.button.setAttribute('id', `tile-button-${idx}`);
 		this.button.classList.add(`tile-button`);
 
@@ -331,14 +411,14 @@ class Tile {
 	}
 
 	setLetter = (letter) => {
+		const letterScore = this.boggleBoard.SCRABBLESCORING[`${letter.toLowerCase()}`];
 		if (letter === 'Q') {
 			letter = 'Qu';
 		}
 		this.letter = letter;
-
-		this.button.innerText = letter;
+		this.animate();
+		this.button.innerHTML = `<p class="tile-letter">${letter}</p><p class="tile-score">${letterScore}</p>`;
 	};
-
 	animate = () => {
 		this.button.classList.add('tile-flip');
 		setTimeout(() => {
@@ -391,8 +471,10 @@ class Scorer {
 			this.currentTilesHolder = this.boggleGame.boggleBoard.currentTilesHolder;
 			this.wordSet = wordSet;
 			this.SCORING = { 3: 1, 4: 1, 5: 2, 6: 3, 7: 5, 8: 11 };
+
 			this.guessedWordsHTML = document.querySelector('#guessed-words');
 			this.totalScoreHTML = document.querySelector('#total-score-number');
+			this.highScoreHTML = document.querySelector('#high-score-number');
 		});
 	}
 
@@ -403,7 +485,10 @@ class Scorer {
 			if (!this.scoredWords.has(word)) {
 				if (this.wordSet.has(word)) {
 					// Internal logic
-					let score = this.SCORING[`${Math.min(word.length, 8)}`];
+					const letterScores = word
+						.split('')
+						.map((letter) => this.boggleGame.boggleBoard.SCRABBLESCORING[`${letter}`]);
+					let score = letterScores.reduce((previousValue, currentValue) => previousValue + currentValue);
 					this.totalScore += score;
 					this.scoredWords.add(word);
 
@@ -441,6 +526,15 @@ class Scorer {
 		this.totalScore = 0;
 		this.totalScoreHTML.innerText = '';
 		this.guessedWordsHTML.innerText = '';
+	};
+	updateHighScore = () => {
+		if (this.totalScore > this.boggleGame.highScore) {
+			this.boggleGame.highScore = this.totalScore;
+		}
+		this.highScoreHTML.innerText = this.boggleGame.highScore;
+	};
+	resetHighScore = () => {
+		this.highScoreHTML.innerText = '';
 	};
 }
 

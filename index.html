@@ -13,20 +13,32 @@
     <link rel="stylesheet" href="styles/main.css">
 
     <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/multiplayer.css">
     <link rel="stylesheet" href="styles/boggle-container.css">
     <link rel="stylesheet" href="styles/timerstyle.css">
     <link rel="stylesheet" href="styles/loading-page.css">
-    <title>Boggle</title>
+    <title>ScraBoggle</title>
 </head>
 
 <body>
 
     <header>
-        <h1>SCRAMBLE WITH FRIENDS</h1>
+        <div class="player-selection">
+            <p>HOW MANY PEOPLE ARE PLAYING TODAY?</p>
+            <select name="num-players" id="num-players">
+                <option value="1">ONE</option>
+                <option value="2">TWO</option>
+                <option value="3">THREE</option>
+                <option value="4">FOUR</option>
+            </select>
+        </div>
+        <h1>SCRABOGGLE WITH FRIENDS</h1>
 
         <div id="menu-buttons-div">
+
             <button id="play-button">START</button>
             <button class="instruction-button">INSTRUCTIONS</button>
+
         </div>
 
     </header>
@@ -34,7 +46,7 @@
     <div id="overall-game-container">
         <div class="timer">
             <div class="controls">
-                <input id="seconds-left" value="">
+                <input id="seconds-left" value="30">
             </div>
             <svg class="dial">
                 <circle cx="140" cy="60" r="48" transform="rotate(-90 100 100)" />
@@ -55,6 +67,13 @@
                 <div id="total-score-number"></div>
             </div>
         </div>
+        <div id="high-score-container">
+            <div id="high-score-div">
+                <h5>HIGH SCORE</h5>
+                <div id="high-score-number"></div>
+            </div>
+        </div>
+
     </div>
     </div>
     <div class="instruction-popup">
@@ -68,6 +87,11 @@
             Happy finding!
         </p>
 
+    </div>
+    <div class="next-player-countdown-div">
+        <p class="next-player-countdown">
+            NEXT PLAYER'S GET READY...
+        </p>
     </div>
     <div class="loading-page">
 

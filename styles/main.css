@@ -9,7 +9,9 @@
 }
 
 body {
+	user-select: none;
 	margin: 0 auto;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -23,11 +25,12 @@ body {
 }
 header {
 	width: 100%;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 50px 0 30px 0;
+	padding: 0 0 30px 0;
 	background-color: rgba(24, 32, 37, 0.9);
 	margin: 0 0 50px 0;
 	box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 40px 10px;
@@ -61,7 +64,7 @@ h1 {
 	justify-content: flex-start;
 	align-items: center;
 	min-width: 160px;
-	margin: 0 50px;
+	margin: 0 10px 0 50px;
 }
 #guessed-words-div {
 	display: flex;
@@ -75,7 +78,9 @@ h1 {
 	overflow: auto;
 }
 h5 {
+	display: inline-block;
 	margin: 0 auto;
+	line-height: 0;
 }
 #total-score-div {
 	display: flex;
@@ -101,8 +106,38 @@ h5 {
 .guessed-words {
 	margin: 0 auto;
 	text-align: center;
+	overflow: auto;
 }
-
+#high-score-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+	min-width: 160px;
+	height: 445px;
+	margin: 0;
+}
+#high-score-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	min-width: 120px;
+	padding: 0;
+	height: 80px;
+	background-color: var(--yellow);
+	border-radius: 20px;
+	margin: 0;
+}
+#high-score-number {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 10px;
+	font-size: 1.5rem;
+	font-weight: 800;
+}
 #current-letters-holder {
 	background-color: var(--light-grey);
 	width: 375px;
@@ -122,7 +157,6 @@ h5 {
 .invalid-word {
 	color: rgb(129, 44, 44);
 }
-
 @keyframes gradient {
 	0% {
 		background-position: 0%;
